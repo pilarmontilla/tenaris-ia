@@ -27,8 +27,8 @@ def evaluar_semaforo(boxes):
         area_pct = w_norm * h_norm
         
         estado_actual = "AMARILLO"
-        # Regla del Rojo
-        if conf >= 0.80 and area_pct >= 0.02:
+        # Regla del Rojo (Más estricta con la pieza: a la menor falla clara, se descarta)
+        if conf >= 0.65 and area_pct >= 0.01:
             estado_actual = "ROJO"
         
         # Guardar el peor estado encontrado en todo el mandril
