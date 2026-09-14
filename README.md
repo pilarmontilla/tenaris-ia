@@ -5,7 +5,7 @@
     <img src="docs/imgs/tenaris-logo.png" alt="Tenaris Logo" height="110" />
   </p>
 
-  # MandrelAI
+  # MandreelAI
 
   **Sistema de Visión Computacional para el Monitoreo de Mandriles y Control de Calidad en Tiempo Real**  
   *Solución de Inteligencia Artificial para la laminación de tubos de acero sin costura en Tenaris*
@@ -25,14 +25,14 @@
 </div>
 
 <p align="center">
-  <img src="docs/videos/webpage-gif.gif" alt="Demo MandrelAI" width="100%" />
+  <img src="docs/videos/webpage-gif.gif" alt="Demo MandreelAI" width="100%" />
 </p>
 
 ---
 
 ## Descripción
 
-MandrelAI es una solución de visión computacional desarrollada para Tenaris que automatiza la inspección de mandriles durante la laminación en caliente de tubos de acero sin costura. Detecta defectos como material adherido, desgaste y deformaciones antes de que se transfieran al interior de los tubos, ayudando a reducir el scrap y a reemplazar el control de calidad reactivo por una detección temprana.
+MandreelAI es una solución de visión computacional desarrollada para Tenaris que automatiza la inspección de mandriles durante la laminación en caliente de tubos de acero sin costura. Detecta defectos como material adherido, desgaste y deformaciones antes de que se transfieran al interior de los tubos, ayudando a reducir el scrap y a reemplazar el control de calidad reactivo por una detección temprana.
 
 ---
 

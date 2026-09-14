@@ -1,6 +1,6 @@
 # Decisiones de Diseño y Arquitectura de IA
 
-Este documento detalla las justificaciones técnicas, metodológicas y de negocio que guiaron el desarrollo de **MandrelAI** para la planta de fabricación de tubos de acero sin costura de **Tenaris**.
+Este documento detalla las justificaciones técnicas, metodológicas y de negocio que guiaron el desarrollo de **MandreelAI** para la planta de fabricación de tubos de acero sin costura de **Tenaris**.
 
 ---
 
