@@ -219,3 +219,6 @@ __marimo__/
 
 # Dataset
 dataset/
+
+# MacOs
+.Ds_Store
