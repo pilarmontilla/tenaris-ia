@@ -25,18 +25,7 @@ st.markdown("""
     [data-testid="stDecoration"] {display: none !important;}
     .stDeployButton {display: none !important;}
     
-    /* BLOQUEAR BARRA LATERAL (Siempre abierta, sin botón de cierre) */
-    [data-testid="stSidebar"] {
-        display: block !important;
-        visibility: visible !important;
-        transform: translate3d(0px, 0px, 0px) !important;
-        position: relative !important;
-    }
-    [data-testid="stSidebarCollapseButton"], 
-    [data-testid="collapsedControl"] {
-        display: none !important;
-    }
-    
+
     /* Tipografía y fondos */
     .main-header { font-size: 42px !important; font-weight: 700; color: #222222; margin-bottom: 0px; padding-bottom: 0px; letter-spacing: -0.5px; border-left: 6px solid #009CA6; padding-left: 15px;}
     .color-cyan { color: #009CA6; font-weight: 800; } 
