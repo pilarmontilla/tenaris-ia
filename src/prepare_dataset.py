@@ -3,14 +3,11 @@ import os
 import shutil
 import random
 
-# Rutas originales
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATASET_JSON = os.path.join(BASE_DIR, "dataset/Dataset hackathon/2026.09.09 Dataset hackathon/annotations.json")
 IMG_DIR = os.path.join(BASE_DIR, "dataset/Dataset hackathon/2026.09.09 Dataset hackathon/images/train")
 
-# Destino YOLO
 YOLO_DIR = os.path.join(BASE_DIR, "dataset_yolo")
-# Limpiar directorio YOLO si ya existe para evitar mezclar corridas anteriores
 if os.path.exists(YOLO_DIR):
     shutil.rmtree(YOLO_DIR)
 
@@ -18,7 +15,6 @@ for split in ["train", "val", "test"]:
     os.makedirs(os.path.join(YOLO_DIR, f"images/{split}"), exist_ok=True)
     os.makedirs(os.path.join(YOLO_DIR, f"labels/{split}"), exist_ok=True)
 
-# Mapeo de clases
 CLASS_MAP = {
     "Melted Body": 0,
     "Melted Nose": 1,
@@ -31,7 +27,6 @@ def normalize_bbox(x, y, w, h, img_w, img_h):
     norm_w = w / img_w
     norm_h = h / img_h
     
-    # Saneamiento (Clamping)
     center_x = max(0.0, min(1.0, center_x))
     center_y = max(0.0, min(1.0, center_y))
     norm_w = max(0.0, min(1.0, norm_w))
@@ -87,7 +82,6 @@ def main():
     random.shuffle(melted_body_imgs)
     random.shuffle(clean_imgs)
 
-    # Split 80/10/10
     fn_train, fn_val, fn_test = split_3way(flattened_nose_imgs)
     mn_train, mn_val, mn_test = split_3way(melted_nose_imgs)
     mb_train, mb_val, mb_test = split_3way(melted_body_imgs)

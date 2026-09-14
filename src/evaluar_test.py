@@ -34,29 +34,26 @@ def main():
     
     resultados = []
     
-    verdaderos_positivos = 0  # Estaba roto y la IA dijo roto
-    verdaderos_negativos = 0  # Estaba sano y la IA dijo sano
-    falsos_positivos = 0      # Estaba sano pero la IA dio falsa alarma
-    falsos_negativos = 0      # Estaba roto pero la IA dijo que estaba sano (Peligroso)
+    verdaderos_positivos = 0  
+    verdaderos_negativos = 0  
+    falsos_positivos = 0      
+    falsos_negativos = 0      
     
     for img_p in img_paths:
         base_name = os.path.basename(img_p)
         txt_name = base_name.replace('.png', '.txt')
         txt_path = os.path.join(TEST_LABELS, txt_name)
         
-        # 1. Leer realidad (Ground Truth)
         realidad_roto = False
         if os.path.exists(txt_path) and os.path.getsize(txt_path) > 0:
             realidad_roto = True
             
-        # 2. Predicción de la IA
         img = cv2.imread(img_p)
         results = model.predict(img, conf=0.15, verbose=False)
         estado_ia = evaluar_semaforo(results[0].boxes)
         
         prediccion_roto = True if estado_ia in ["AMARILLO", "ROJO"] else False
         
-        # 3. Comparación
         if realidad_roto and prediccion_roto:
             verdaderos_positivos += 1
             clasificacion = 'Acierto (Defecto detectado)'
@@ -77,11 +74,9 @@ def main():
             'Evaluacion': clasificacion
         })
 
-    # Guardar todos los resultados en Excel/CSV
     df = pd.DataFrame(resultados)
     df.to_csv('reporte_inferencia_test.csv', index=False)
     
-    # Filtrar solo los errores para que los puedas ver rápido
     df_errores = df[df['Evaluacion'].str.contains('Error')]
     df_errores.to_csv('imagenes_mal_detectadas.csv', index=False)
     
@@ -101,7 +96,6 @@ def main():
     print("="*50)
     print("📁 Se guardó 'imagenes_mal_detectadas.csv' con los nombres de las fotos donde se equivocó.")
     
-    # Crear Matriz de Confusión Visual
     matriz = [[verdaderos_positivos, falsos_negativos],
               [falsos_positivos, verdaderos_negativos]]
               
