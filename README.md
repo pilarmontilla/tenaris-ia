@@ -10,13 +10,29 @@
   **Sistema de Visión Computacional para el Monitoreo de Mandriles y Control de Calidad en Tiempo Real**  
   *Solución de Inteligencia Artificial para la laminación de tubos de acero sin costura en Tenaris*
 
+  <br />
+
+  <p>
+    🌐 Probá la demo online en vivo en 👉 <a href="https://mandrelai.streamlit.app/" target="_blank"><strong>mandrelai.streamlit.app</strong></a>
+  </p>
+
+  <a href="https://mandrelai.streamlit.app/" target="_blank">
+    <img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="Abrir en Streamlit Cloud" />
+  </a>
+
+<br />
+
 </div>
 
-MandrelAI es una solución de visión computacional desarrollada para Tenaris que automatiza la inspección de mandriles durante la laminación en caliente de tubos de acero sin costura. Detecta defectos como material adherido, desgaste y deformaciones antes de que se transfieran al interior de los tubos, ayudando a reducir el scrap y a reemplazar el control de calidad reactivo por una detección temprana.
-
 <p align="center">
-  <video src="docs/videos/webpage-gif.mp4" autoplay muted loop playsinline width="100%"></video>
+  <img src="docs/videos/webpage-gif.gif" alt="Demo MandrelAI" width="100%" />
 </p>
+
+---
+
+## Descripción
+
+MandrelAI es una solución de visión computacional desarrollada para Tenaris que automatiza la inspección de mandriles durante la laminación en caliente de tubos de acero sin costura. Detecta defectos como material adherido, desgaste y deformaciones antes de que se transfieran al interior de los tubos, ayudando a reducir el scrap y a reemplazar el control de calidad reactivo por una detección temprana.
 
 ---
 
@@ -73,7 +89,9 @@ Inicia el panel de control de planta para visualizar la inspección en tiempo re
 streamlit run webapp/app.py
 ```
 
-> Una vez ejecutado, se abrirá automáticamente en tu navegador en `http://localhost:8501`. Permite seleccionar imágenes de prueba de la galería lateral o subir imágenes personalizadas.
+> 🌐 **Demo en vivo (Nube):** Podés probar la aplicación desplegada sin instalar nada localmente ingresando a **[mandrelai.streamlit.app](https://mandrelai.streamlit.app/)**.
+>
+> 💻 **Ejecución local:** Una vez ejecutado el comando anterior, se abrirá automáticamente en tu navegador en `http://localhost:8501`. Permite seleccionar imágenes de prueba de la galería lateral o subir imágenes personalizadas.
 
 ---
 
@@ -141,10 +159,9 @@ El repositorio ya incluye los pesos entrenados listos para producción en `runs/
 tenaris-ia/
 ├── dataset/                  # Dataset original con anotaciones.json e imágenes
 ├── docs/                     # Documentación técnica y del negocio
-│   ├── decisiones_diseno.md  # Justificación técnica de arquitectura y diseño
-│   ├── IA/                   # Notas de investigación y contexto del modelo
-│   ├── desafio/              # Especificaciones de la competencia Tenaris
-│   └── info/                 # Papers y catálogos de productos Tenaris
+│   ├── decisiones_tecnicas.md # Justificación técnica de arquitectura y diseño
+│   ├── imgs/                 # Logos e imágenes del proyecto
+│   └── videos/               # Videos demostrativos
 ├── runs/                     # Modelos y pesos entrenados (YOLOv8 best.pt)
 ├── src/                      # Código fuente de entrenamiento y utilidades
 │   ├── prepare_dataset.py    # Generación del split y conversión a formato YOLO
@@ -155,7 +172,21 @@ tenaris-ia/
 │   └── metrica_exito_roi.py  # KPIs económicos y de scrap evitado
 ├── webapp/                   # Interfaz gráfica para operarios
 │   ├── app.py                # Dashboard en Streamlit
+│   ├── muestras/             # Galería de imágenes de prueba para demo
 │   └── photos/               # Recursos visuales e identidad de marca
+├── packages.txt              # Librerías de sistema para Streamlit Cloud
 ├── requirements.txt          # Dependencias del entorno Python
 └── README.md                 # Guía principal del proyecto
 ```
+
+---
+
+## 👥 Equipo de Desarrollo
+
+| Integrante | Contacto |
+| :--- | :--- |
+| **Pilar Montilla** | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pilar-montilla/) &nbsp; [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/pilarmontilla) |
+| **Santiago Lorido** | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/santiago-lorido/) &nbsp; [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/santilorido) |
+| **Camila Rocío Gogniat** | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/camila-gogniat/) |
+| **Valentino Bianchi** | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/valentino-bianchi/) |
+| **Tobias Nudelman** | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tobias-nudelman/) |
