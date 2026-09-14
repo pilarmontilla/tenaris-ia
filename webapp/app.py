@@ -6,25 +6,67 @@ import numpy as np
 from PIL import Image
 from ultralytics import YOLO
 
-# 1. Configuración de página
 st.set_page_config(page_title="Tenaris - AI Vision", page_icon="🔴", layout="wide", initial_sidebar_state="expanded")
 
-# 2. Rutas dinámicas
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_PATH = os.path.join(BASE_DIR, 'runs/detect/mandrel_detector_v1/weights/best.pt')
 MUESTRAS_DIR = os.path.join(BASE_DIR, 'webapp/muestras')
 LOGO_PATH = os.path.join(BASE_DIR, 'webapp/photos/tenaris_logo.webp')
 
-# 3. CSS Corporativo (Estilo web Tenaris: Blanco, Limpio, Acentos Rojos)
 st.markdown("""
     <style>
-    /* Ocultar elementos nativos y badges de Streamlit */
+    /* Ocultar menú y footer nativo sin romper controles de navegación */
     #MainMenu {visibility: hidden !important;}
     footer {visibility: hidden !important; display: none !important;}
-    [data-testid="stToolbar"] {visibility: hidden !important; display: none !important;}
     [data-testid="stDecoration"] {display: none !important;}
     .stDeployButton {display: none !important;}
     
+    /* Asegurar que el header no tape clics */
+    header[data-testid="stHeader"] {
+        background: transparent !important;
+    }
+
+    /* BOTÓN PARA DEVOLVER / EXPANDIR LA BARRA LATERAL (cuando está cerrada) */
+    [data-testid="collapsedControl"] {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        top: 12px !important;
+        left: 12px !important;
+        z-index: 100000 !important;
+    }
+    [data-testid="collapsedControl"] button {
+        background-color: #FFFFFF !important;
+        color: #009CA6 !important;
+        border: 1.5px solid #009CA6 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+        padding: 6px 10px !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+    }
+    [data-testid="collapsedControl"] button:hover {
+        background-color: #E6F5F6 !important;
+        transform: scale(1.08) !important;
+        box-shadow: 0 4px 12px rgba(0,156,166,0.3) !important;
+    }
+
+    /* BOTÓN PARA COLAPSAR LA BARRA LATERAL (cuando está abierta) */
+    [data-testid="stSidebarCollapseButton"] {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button {
+        color: #009CA6 !important;
+        border-radius: 6px !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button:hover {
+        background-color: #E6F5F6 !important;
+        color: #007A82 !important;
+    }
+
 
     /* Tipografía y fondos */
     .main-header { font-size: 42px !important; font-weight: 700; color: #222222; margin-bottom: 0px; padding-bottom: 0px; letter-spacing: -0.5px; border-left: 6px solid #009CA6; padding-left: 15px;}
@@ -116,7 +158,6 @@ def dibujar_cajas_semaforo(img, boxes, class_names):
         w_norm, h_norm = float(box.xywhn[0][2]), float(box.xywhn[0][3])
         area_pct = w_norm * h_norm
         
-        # Color según gravedad (RGB porque la imagen base ya está en RGB)
         if conf >= 0.65 and area_pct >= 0.01:
             color = (255, 0, 0)     # Rojo
             estado_str = "CRITICO"
@@ -124,19 +165,15 @@ def dibujar_cajas_semaforo(img, boxes, class_names):
             color = (255, 200, 0)   # Amarillo
             estado_str = "SUPERVISION"
             
-        # Dibujar recuadro principal
         cv2.rectangle(img_drawn, (x1, y1), (x2, y2), color, 3)
         
-        # Etiqueta de texto
         label = f"{name} {conf:.2f} [{estado_str}]"
         font = cv2.FONT_HERSHEY_SIMPLEX
         font_scale = 0.5
         thickness = 2
         (tw, th), _ = cv2.getTextSize(label, font, font_scale, thickness)
         
-        # Fondo para el texto
         cv2.rectangle(img_drawn, (x1, y1 - th - 5), (x1 + tw, y1), color, -1)
-        # Texto en color negro
         cv2.putText(img_drawn, label, (x1, y1 - 5), font, font_scale, (0, 0, 0), thickness)
         
     return img_drawn
@@ -147,7 +184,6 @@ def main():
 
     # -- SIDEBAR --
     with st.sidebar:
-        # Cargar logo local de Tenaris
         if os.path.exists(LOGO_PATH):
             st.image(LOGO_PATH, use_container_width=True)
         else:
@@ -177,8 +213,6 @@ def main():
             img_bgr = cv2.imdecode(file_bytes, 1)
             st.session_state.img_to_analyze = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
             
-        # (Se eliminó la lista del sidebar para pasarla al footer flotante de la derecha)
-
     # -- MAIN --
     st.markdown('<p class="main-header">Línea de Mandriles <span class="color-cyan">|</span> <span class="color-purple">AI</span> <span class="color-green">Vision</span></p>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">Monitoreo térmico automatizado para Mantenimiento Predictivo.</p>', unsafe_allow_html=True)
@@ -193,7 +227,6 @@ def main():
             
         for r in results:
             estado = evaluar_semaforo(r.boxes)
-            # Dibujamos las cajas manualmente con nuestra lógica visual de semáforo
             im_out = dibujar_cajas_semaforo(img_rgb, r.boxes, model.names)
             
         col1, col2 = st.columns(2)
@@ -206,7 +239,6 @@ def main():
             
         st.markdown("<br>", unsafe_allow_html=True)
         
-        # Cajas de estado corporativas
         if estado == "VERDE":
             st.success("#### 🟢 ESTADO: APTO PARA PRODUCCIÓN \nIntegridad estructural verificada. El ciclo de laminación continúa activo.")
         elif estado == "AMARILLO":
@@ -214,7 +246,6 @@ def main():
         elif estado == "ROJO":
             st.error("#### 🔴 ESTADO: CRÍTICO (DESCARTAR PIEZA) \nFalla severa confirmada. Señal enviada a PLC para recambio de herramienta.")
     else:
-        # Estado inicial vacío
         st.markdown("""
         <div class="empty-box">
             <h3 style="color: #666;">Esperando señal de cámara...</h3>
@@ -222,7 +253,6 @@ def main():
         </div>
         """, unsafe_allow_html=True)
 
-    # Footer Flotante HTML con Logos Reales
     st.markdown("""
     <div class="team-footer">
         <b style="margin-right: 5px;">👥 Equipo:</b> 
